@@ -1,6 +1,6 @@
 def filter_by_state(list_of_dicts: list[dict], state: str = "EXECUTED") -> list[dict]:
     """
-    Функция возвращат список словарей с указанным ключом state
+    Функция возвращает список словарей с указанным ключом state
     Если ключ state явно не указан при вызове - вернет по умолчанию
     с ключом EXECUTED
     """
