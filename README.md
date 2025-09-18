@@ -1,5 +1,3 @@
-from src.widget import mask_account_cardfrom src.processing import sort_by_datefrom src.masks import get_mask_accountfrom src.masks import get_mask_card_number
-
 # Виджет банковских операций
 
 ### В этом проекте происходит разработка виджета, который показывает несколько последних успешных банковских операций клиента.
