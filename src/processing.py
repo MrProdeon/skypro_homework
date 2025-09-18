@@ -4,3 +4,9 @@ def filter_by_state(list_of_dicts: list[dict], state: str = "EXECUTED") -> list[
     ]
 
     return filtered_by_state_lists
+
+
+def sort_by_date(list_of_dicts: list[dict], is_reversed: bool = True) -> list[dict]:
+    sorted_by_date_list = sorted(list_of_dicts, key=lambda x: x["date"], reverse=is_reversed)
+
+    return sorted_by_date_list
