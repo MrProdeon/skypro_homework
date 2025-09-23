@@ -1,4 +1,6 @@
 from src.masks import get_mask_account, get_mask_card_number
+from src.widget import mask_account_card, get_date
+
 import pytest
 
 
@@ -16,6 +18,7 @@ def test_get_mask_card_number(get_card_number_1, get_card_number_2, get_card_num
     assert get_mask_card_number(get_card_number_2) == '5555 55** **** 4444'
 
     assert get_mask_card_number(get_card_number_3) == '3891 72** **** 3456'
+
 
 
 
