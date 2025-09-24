@@ -14,7 +14,7 @@ from src.widget import get_date, mask_account_card
     ],
 )
 def test_mask_account_card(card_or_account_number, expected_result):
-    mask_account_card(card_or_account_number) == expected_result
+    assert mask_account_card(card_or_account_number) == expected_result
 
 
 @pytest.mark.parametrize(
