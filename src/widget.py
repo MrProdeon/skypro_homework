@@ -13,7 +13,7 @@ def mask_account_card(card_or_account_number: str) -> str:
     else:
         resulted_mask = (
             f"{card_or_account_number[:card_or_account_number.index(data_about_number[-1])]}"
-            f" {get_mask_card_number(int(data_about_number[-1]))}"
+            f"{get_mask_card_number(int(data_about_number[-1]))}"
         )
     return resulted_mask
 
