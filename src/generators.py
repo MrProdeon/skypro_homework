@@ -16,3 +16,17 @@ def transaction_descriptions(transactions : list[dict]) -> str:
 
     for desc in descriptions:
         yield desc
+
+
+def card_number_generator(start_gen, end_gen):
+    starting_number = 0
+    for i in range(start_gen, end_gen + 1):
+        resulted_card_number = []
+        starting_number += 1
+        zfilled_number = str(starting_number).zfill(20)
+        for j in range(0, len(zfilled_number), 4):
+            chunk = zfilled_number[j:j + 4]
+            resulted_card_number.append(chunk)
+
+        yield ' '.join(resulted_card_number)
+
