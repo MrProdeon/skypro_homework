@@ -1,40 +1,9 @@
-# mypy: ignore-errors
+from src.generators import filter_by_currency, transaction_descriptions
 import pytest
 
-
-@pytest.fixture
-def get_account_1():
-    return "48291530670418293750"
-
-
-@pytest.fixture
-def get_account_2():
-    return "70913428560194732016"
-
-
-@pytest.fixture
-def get_account_3():
-    return "35678049281756019324"
-
-
-@pytest.fixture
-def get_card_number_1():
-    return 4242424242424242
-
-
-@pytest.fixture
-def get_card_number_2():
-    return 5555555555554444
-
-
-@pytest.fixture
-def get_card_number_3():
-    return 3891725234553456
-
-@pytest.fixture
-def transactions_for_test():
-    return [
-        {
+def test_filter_by_currency(transactions_for_test):
+    testing_usd = filter_by_currency(transactions_for_test, 'USD')
+    assert next(testing_usd) == {
             "id": 939719570,
             "state": "EXECUTED",
             "date": "2018-06-30T02:08:58.425572",
@@ -48,23 +17,10 @@ def transactions_for_test():
             "description": "Перевод организации",
             "from": "Счет 75106830613657916952",
             "to": "Счет 11776614605963066702"
-        },
-        {
-            "id": 142264268,
-            "state": "EXECUTED",
-            "date": "2019-04-04T23:20:05.206878",
-            "operationAmount": {
-                "amount": "79114.93",
-                "currency": {
-                    "name": "USD",
-                    "code": "USD"
-                }
-            },
-            "description": "Перевод со счета на счет",
-            "from": "Счет 19708645243227258542",
-            "to": "Счет 75651667383060284188"
-        },
-        {
+        }
+
+    testing_rub = filter_by_currency(transactions_for_test, 'RUB')
+    assert next(testing_rub) ==  {
             "id": 919739511,
             "state": "CANCELED",
             "date": "2013-02-31T02:08:58.425572",
@@ -78,8 +34,9 @@ def transactions_for_test():
             "description": "Перевод организации",
             "from": "Счет 75106830613657916952",
             "to": "Счет 11776614605963066702"
-        },
-        {
+        }
+    testing_euro = testing_rub = filter_by_currency(transactions_for_test, 'EURO')
+    assert next(testing_euro) == {
             "id": 142381766,
             "state": "CANCELED",
             "date": "2012-01-01T23:20:05.206878",
@@ -94,4 +51,8 @@ def transactions_for_test():
             "from": "Счет 19708642345527258542",
             "to": "Счет 75651123456060284188"
         }
-    ]
+
+def test_descriptions(transactions_for_test):
+    testins_desc = transaction_descriptions(transactions_for_test)
+    assert next(testins_desc) == 'Перевод организации'
+    assert next(testins_desc) == 'Перевод со счета на счет'
