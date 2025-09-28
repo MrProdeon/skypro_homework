@@ -66,8 +66,6 @@ def test_descriptions(transactions_for_test):
     testing_empty_list = transaction_descriptions([])
     assert list(testing_empty_list) == []
 
-
-
 @pytest.mark.parametrize('start_gen, end_gen, expected', [
     (3, 7, ["0000 0000 0000 0000 0003",
         "0000 0000 0000 0000 0004",
@@ -82,4 +80,7 @@ def test_descriptions(transactions_for_test):
     ])
 ])
 def test_card_number_generator_wirh_params(start_gen, end_gen, expected):
+
     assert list(card_number_generator(start_gen, end_gen)) == expected
+    assert list(card_number_generator(start_gen, end_gen)) == expected
+
