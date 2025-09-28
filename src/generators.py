@@ -13,6 +13,10 @@ def filter_by_currency(transactions : list[dict], currency : str = 'USD') -> ite
 
 
 def transaction_descriptions(transactions : list[dict]) -> str:
+    """
+    Функция принимает список словарей из транзакций, формирует итератор из описаний
+     и возвращает описание этой транзакции по одной при обращении к итератору.
+    """
     descriptions = (desc['description'] for desc in transactions)
 
     for desc in descriptions:
@@ -20,10 +24,14 @@ def transaction_descriptions(transactions : list[dict]) -> str:
 
 
 def card_number_generator(start_gen, end_gen):
-    starting_number = 0
+    """
+    Генерирует номер карты в заданном в диапазоне.
+    Генерация начинается с 20 нулей и каждый раз прибавляется единица из заданного в параметрах промежутка.
+    Генерация может происходить, условно, бесконечно.
+    """
     for i in range(start_gen, end_gen + 1):
         resulted_card_number = []
-        starting_number += 1
+        starting_number = i
         zfilled_number = str(starting_number).zfill(20)
         for j in range(0, len(zfilled_number), 4):
             chunk = zfilled_number[j:j + 4]

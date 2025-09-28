@@ -63,14 +63,17 @@ def test_descriptions(transactions_for_test):
     assert next(testins_desc) == 'Перевод организации'
     assert next(testins_desc) == 'Перевод со счета на счет'
 
+    testing_empty_list = transaction_descriptions([])
+    assert list(testing_empty_list) == []
+
 def test_card_number_generator():
-    test_card = card_number_generator(1, 5)
+    test_card = card_number_generator(3, 7)
     expected = [
-        "0000 0000 0000 0000 0001",
-        "0000 0000 0000 0000 0002",
         "0000 0000 0000 0000 0003",
         "0000 0000 0000 0000 0004",
         "0000 0000 0000 0000 0005",
+        "0000 0000 0000 0000 0006",
+        "0000 0000 0000 0000 0007",
     ]
-    result = list(card_number_generator(1, 5))
+    result = list(card_number_generator(3, 7))
     assert result == expected
