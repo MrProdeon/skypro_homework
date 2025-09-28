@@ -35,7 +35,7 @@ def test_filter_by_currency(transactions_for_test):
             "from": "Счет 75106830613657916952",
             "to": "Счет 11776614605963066702"
         }
-    testing_euro = testing_rub = filter_by_currency(transactions_for_test, 'EURO')
+    testing_euro = filter_by_currency(transactions_for_test, 'EURO')
     assert next(testing_euro) == {
             "id": 142381766,
             "state": "CANCELED",
@@ -51,6 +51,12 @@ def test_filter_by_currency(transactions_for_test):
             "from": "Счет 19708642345527258542",
             "to": "Счет 75651123456060284188"
         }
+
+    testing_empty_list = filter_by_currency([], 'USD')
+    assert list(testing_empty_list) == []
+
+    testing_no_currency = filter_by_currency(transactions_for_test, 'BTC')
+    assert list(testing_no_currency) == []
 
 def test_descriptions(transactions_for_test):
     testins_desc = transaction_descriptions(transactions_for_test)

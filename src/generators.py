@@ -3,10 +3,11 @@ def filter_by_currency(transactions : list[dict], currency : str = 'USD') -> ite
     Функция для отбора транзакций по заданной валюте.
     Функция принимает список транзакций в виде списка словарей и валюту, по умолчанию USD
     Вернет итератор, в котором будут только словари, которые имеют только нужная валюта.
+    Если список на входе пуст или нет подходящей валюты - генератор будет пуст, ошибки при этом
+    не возникает.
     """
     filtered_transactions = (one_transaction for one_transaction in transactions
                              if one_transaction['operationAmount']['currency']['name'] == currency)
-
     for transaction in filtered_transactions:
         yield transaction
 
