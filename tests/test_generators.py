@@ -80,4 +80,7 @@ def test_descriptions(transactions_for_test):
     ])
 ])
 def test_card_number_generator_wirh_params(start_gen, end_gen, expected):
+
     assert list(card_number_generator(start_gen, end_gen)) == expected
+    assert list(card_number_generator(start_gen, end_gen)) == expected
+
