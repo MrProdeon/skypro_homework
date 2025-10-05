@@ -1,11 +1,13 @@
 from functools import wraps
 import os
+from collections.abc import Callable
+from typing import Any
 
 
-def log(filename=None):
-    def wrapper(func):
+def log(filename : str | None =None) -> Callable:
+    def wrapper(func : Callable) -> Callable:
         @wraps(func)
-        def inner(*args, **kwargs):
+        def inner(*args : Any, **kwargs : Any) -> Any:
             func_name = func.__name__
 
             try:
