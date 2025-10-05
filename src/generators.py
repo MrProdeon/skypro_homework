@@ -1,7 +1,7 @@
-from collections.abc import Iterable
+from typing import Iterator
 
 
-def filter_by_currency(transactions: list[dict], currency: str = "USD") -> Iterable:
+def filter_by_currency(transactions: list[dict], currency: str = "USD") -> Iterator[dict]:
     """
     Функция для отбора транзакций по заданной валюте.
     Функция принимает список транзакций в виде списка словарей и валюту, по умолчанию USD
@@ -18,7 +18,7 @@ def filter_by_currency(transactions: list[dict], currency: str = "USD") -> Itera
         yield transaction
 
 
-def transaction_descriptions(transactions: list[dict]) -> Iterable:
+def transaction_descriptions(transactions: list[dict]) -> Iterator[str]:
     """
     Функция принимает список словарей из транзакций, формирует итератор из описаний
      и возвращает описание этой транзакции по одной при обращении к итератору.
@@ -29,7 +29,7 @@ def transaction_descriptions(transactions: list[dict]) -> Iterable:
         yield desc
 
 
-def card_number_generator(start_gen: int, end_gen: int) -> Iterable:
+def card_number_generator(start_gen: int, end_gen: int) -> Iterator[str]:
     """
     Генерирует номер карты в заданном в диапазоне.
     Генерация начинается с 20 нулей и каждый раз прибавляется единица из заданного в параметрах промежутка.
