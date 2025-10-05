@@ -1,4 +1,7 @@
-def filter_by_currency(transactions : list[dict], currency : str = 'USD') -> iter :
+from collections.abc import Iterable
+
+
+def filter_by_currency(transactions: list[dict], currency: str = "USD") -> Iterable:
     """
     Функция для отбора транзакций по заданной валюте.
     Функция принимает список транзакций в виде списка словарей и валюту, по умолчанию USD
@@ -6,24 +9,27 @@ def filter_by_currency(transactions : list[dict], currency : str = 'USD') -> ite
     Если список на входе пуст или нет подходящей валюты - генератор будет пуст, ошибки при этом
     не возникает.
     """
-    filtered_transactions = (one_transaction for one_transaction in transactions
-                             if one_transaction['operationAmount']['currency']['name'] == currency)
+    filtered_transactions = (
+        one_transaction
+        for one_transaction in transactions
+        if one_transaction["operationAmount"]["currency"]["name"] == currency
+    )
     for transaction in filtered_transactions:
         yield transaction
 
 
-def transaction_descriptions(transactions : list[dict]) -> str:
+def transaction_descriptions(transactions: list[dict]) -> Iterable:
     """
     Функция принимает список словарей из транзакций, формирует итератор из описаний
      и возвращает описание этой транзакции по одной при обращении к итератору.
     """
-    descriptions = (desc['description'] for desc in transactions)
+    descriptions = (desc["description"] for desc in transactions)
 
     for desc in descriptions:
         yield desc
 
 
-def card_number_generator(start_gen, end_gen):
+def card_number_generator(start_gen: int, end_gen: int) -> Iterable:
     """
     Генерирует номер карты в заданном в диапазоне.
     Генерация начинается с 20 нулей и каждый раз прибавляется единица из заданного в параметрах промежутка.
@@ -34,8 +40,7 @@ def card_number_generator(start_gen, end_gen):
         starting_number = i
         zfilled_number = str(starting_number).zfill(20)
         for j in range(0, len(zfilled_number), 4):
-            chunk = zfilled_number[j:j + 4]
+            chunk = zfilled_number[j : j + 4]
             resulted_card_number.append(chunk)
 
-        yield ' '.join(resulted_card_number)
-
+        yield " ".join(resulted_card_number)
