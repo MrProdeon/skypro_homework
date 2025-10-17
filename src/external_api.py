@@ -1,17 +1,17 @@
 import os
-from dotenv import load_dotenv
+
 import requests
+from dotenv import load_dotenv
 from requests import HTTPError
 
 load_dotenv()
 
 API_KEY = os.getenv("APILAYER_KEY")
 
-headers = {
-    "apikey" : API_KEY
-}
+headers = {"apikey": API_KEY}
 
-def get_amount_of_transaction(transaction : dict) -> float:
+
+def get_amount_of_transaction(transaction: dict) -> float:
     """
     Возвращает сумму транзакции в рублях.
     Если изначальная валюта USD или EUR - Переводит в рубли.
@@ -21,11 +21,10 @@ def get_amount_of_transaction(transaction : dict) -> float:
     amount = transaction.get("operationAmount", {}).get("amount", 0)
     currency = transaction.get("operationAmount", {}).get("currency", {}).get("code", "RUB")
 
-    if currency== "RUB":
+    if currency == "RUB":
         return float(amount)
 
     elif currency in ("USD", "EUR"):
-
 
         url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={currency}&amount={amount}"
         try:
@@ -34,9 +33,9 @@ def get_amount_of_transaction(transaction : dict) -> float:
             data = response.json()
             resulted_currency = data.get("result")
             if resulted_currency is None:
-                raise ValueError('Такого ключа нет')
+                raise ValueError("Такого ключа нет")
             return float(resulted_currency)
-        except requests.RequestException as e:
-            raise HTTPError(f"Произошла ошибка при обращении к API")
+        except requests.RequestException:
+            raise HTTPError("Произошла ошибка при обращении к API")
     else:
         return float(amount)

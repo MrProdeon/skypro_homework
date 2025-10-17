@@ -12,6 +12,7 @@ def log(filename: str | None = None) -> Callable:
     По умолчанию отдает в консоль, но можно необязательным параметром в декоратор передать имя файла, в который
     будут записаны финальные данные.
     """
+
     def wrapper(func: Callable) -> Callable:
         @wraps(func)
         def inner(*args: Any, **kwargs: Any) -> Any:
