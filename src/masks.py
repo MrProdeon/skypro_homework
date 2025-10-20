@@ -1,14 +1,14 @@
 import logging
+import os
+
+log_path = os.path.join(os.path.dirname(__file__), "..", "logs", "logs.log")
 
 logger = logging.getLogger("masks")
 logger.setLevel(logging.INFO)
-file_handler = logging.FileHandler("../logs/logs.log", 'w', encoding="UTF-8")
+file_handler = logging.FileHandler(log_path, "w", encoding="UTF-8")
 formatter = logging.Formatter("%(asctime)s - %(filename)s - %(levelname)s - %(message)s")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
-
-
-
 
 
 def get_mask_card_number(card_number: int | str) -> str:
@@ -35,7 +35,7 @@ def get_mask_card_number(card_number: int | str) -> str:
         logger.info("Форматорование окончено, карта успешно замаскирована и отфарматирована")
         return masked_number_with_spaces
     except Exception as e:
-        logger.exception(f'Произошла ошибка {e}')
+        logger.exception(f"Произошла ошибка {e}")
         raise ValueError(f"Произошла ошибка {e}")
 
 
