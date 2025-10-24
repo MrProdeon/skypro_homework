@@ -28,4 +28,4 @@ def excel_reader(path_to_excel_file : str) -> list[dict]:
     return reader_dataframe.to_dict(orient="records")
 
 
-print(excel_reader(r"C:\my_python_projects\study\skypro_git_homework\data\transactions_excel.xlsx"))
+print(excel_reader(r"/data/transactions_excel.xlsx"))
