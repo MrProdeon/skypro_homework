@@ -215,6 +215,38 @@ print(f"Сумма в рублях (RUB): {amount_in_rub_rub}")
 
 ```
 
+8) readers
+- Функция excel_reader  
+Функция для преобразования информации из excel файла в список словарей. Получает путь до excel файла и преобразует его
+содержимое в список словарей  
+Пример исспользования:
+```python
+data = excel_reader("transactions.xlsx")
+print(data)
+
+>>> 
+[
+    {"id": 1, "state": "EXECUTED", "amount": 100, "currency": "USD", "date": "2024-01-15"},
+    {"id": 2, "state": "PENDING", "amount": 250, "currency": "EUR", "date": "2024-01-16"},
+    {"id": 3, "state": "EXECUTED", "amount": 75, "currency": "GBP", "date": "2024-01-17"}
+]
+```
+
+- Функция csv_reader  
+Функция для преобразования информации из csv файла в список словарей. Получает путь до csv файла и преобразует его
+содержимое в список словарей
+```python
+data = csv_reader("transactions.csv")
+print(data)
+
+>>>
+[
+    {"id": "1", "state": "EXECUTED", "amount": "100", "currency": "USD", "date": "2024-01-15"},
+    {"id": "2", "state": "PENDING", "amount": "250", "currency": "EUR", "date": "2024-01-16"},
+    {"id": "3", "state": "EXECUTED", "amount": "75", "currency": "GBP", "date": "2024-01-17"}
+]
+```
+
 ## Тестирование
 - На каждый модуль проекта были написаны тесты, после чего все тесты были успешно пройдены.  
 Все тесты находятся в директории tests, каждый модуль теста соответствует модулю директории src.
