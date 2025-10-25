@@ -28,5 +28,3 @@ def excel_reader(path_to_excel_file: str) -> list[dict]:
     """
     reader_dataframe = pd.read_excel(path_to_excel_file)
     return reader_dataframe.to_dict(orient="records")
-
-print(csv_reader(path_csv))

@@ -1,9 +1,10 @@
 # mypy: ignore-errors
-
+import os.path
 from unittest.mock import patch
 
 from src.utils import get_info_about_operation
 
+path = os.path.join(os.path.dirname(__file__), '..', 'data', 'operations.json')
 
 @patch("src.utils.json.load")
 def test_get_info_correct_file(mocked_load):
@@ -15,7 +16,7 @@ def test_get_info_correct_file(mocked_load):
             "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
         }
     ]
-    result = get_info_about_operation(r"C:\my_python_projects\study\skypro_git_homework\data\operations.json")
+    result = get_info_about_operation(path)
     assert result == [
         {
             "id": 441945886,
@@ -34,21 +35,21 @@ def test_get_info_not_list(mocked_load):
         "date": "2019-08-26T10:50:58.294041",
         "operationAmount": {"amount": "31957.58", "currency": {"name": "руб.", "code": "RUB"}},
     }
-    result = get_info_about_operation(r"C:\my_python_projects\study\skypro_git_homework\data\operations.json")
+    result = get_info_about_operation(path)
     assert result == []
 
 
 @patch("src.utils.open")
 def test_get_info_filenotfounderror(mocked_open):
     mocked_open.side_effect = FileNotFoundError
-    result = get_info_about_operation("data/operation.json")
+    result = get_info_about_operation(path)
     assert result == []
 
 
 @patch("src.utils.os.path.getsize")
 def test_get_info_empty_size(mocked_getsize):
     mocked_getsize.return_value = 0
-    result = get_info_about_operation("data/operation.json")
+    result = get_info_about_operation(path)
     assert result == []
 
 
@@ -57,5 +58,5 @@ def test_get_info_empty_size(mocked_getsize):
 def test_get_info_not_empty_size_but_filenotfounderror(mocked_getsize, mocked_open):
     mocked_getsize.return_value = 5
     mocked_open.side_effect = FileNotFoundError
-    result = get_info_about_operation("data/operations.json")
+    result = get_info_about_operation(path)
     assert result == []
