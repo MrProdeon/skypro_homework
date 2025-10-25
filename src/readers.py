@@ -3,7 +3,8 @@ import os
 
 import pandas as pd
 
-path = os.path.join(os.path.dirname(__file__), "..", "data", "transactions_excel.xlsx")
+path_csv = os.path.join(os.path.dirname(__file__), "..", "data", "transactions.csv")
+path_excel = os.path.join(os.path.dirname(__file__), "..", "data", "transactions_excel.xlsx")
 
 
 def csv_reader(path_to_csv_file: str) -> list[dict]:
@@ -13,8 +14,8 @@ def csv_reader(path_to_csv_file: str) -> list[dict]:
     :return: Список словарей, в котором каждый словарь - это строка из csv файла, где ключ - название столбца, а
     значение - значение ячейки в строке по этому столбцу
     """
-    with open(path_to_csv_file, "r", encoding="UTF-8") as file:
-        reader = csv.DictReader(file)
+    with open(path_to_csv_file, "r", encoding="UTF-8",) as file:
+        reader = csv.DictReader(file, delimiter=";")
         return [row for row in reader]
 
 
