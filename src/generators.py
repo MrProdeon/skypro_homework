@@ -12,7 +12,7 @@ def filter_by_currency(transactions: list[dict], currency: str = "USD") -> Itera
     filtered_transactions = (
         one_transaction
         for one_transaction in transactions
-        if one_transaction["operationAmount"]["currency"]["name"] == currency
+        if one_transaction["operationAmount"]["currency"]["code"] == currency
     )
     for transaction in filtered_transactions:
         yield transaction
