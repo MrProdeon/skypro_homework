@@ -8,7 +8,7 @@
 3) Проект на данный момент на стадии разработки. В будущем будет добавлена точка входа в модуле `main.py`
 
 ## Описание функционала:
-На данный момент в проекте есть 3 модуля:
+
 1) masks:
 - Функция get_mask_card_number для максировки номера карты
 ```python
@@ -20,6 +20,7 @@ get_mask_card_number(7000792289606361)
 get_mask_account(73654108430135874305 )
 >>> **4305
 ```
+Модуль использует логеры, записывающие информацию о процессе выполнения функции и ошибок.
 
 2) processing
 - Функция filter_by_state возвращает на выбор все отмененные или выполненные операци
@@ -159,6 +160,93 @@ get_dif(1, 0)
 >>> Запись в файл "Исключение!\nИмя функции : get_dif\nОшибка : division by zero\nВходные параметры : ((1, 0), {})\n"
 
 ```
+6) utils
+- Функция get_info_about_operation  
+Принимает путь до JSON-файл с операциями и возвращает Python-объект из него
+    Возвращает пустой список если :
+    1) Файл пустой
+    2) Вернулся объект, который не является списком
+    3) Файл не найден  
+  4) 
+logger.info() — используется для информирования о ходе выполнения (начало работы, успешная загрузка и т.д.).  
+logger.exception() — фиксирует ошибку, если файл не найден.
+Пример использования :
+```python
+operations = get_info_about_operation("operations.json")
+
+if operations:
+    print(f"Загружено операций: {len(operations)}")
+else:
+    print("Файл не найден или пуст.")
+
+```
+7) external_api  
+Используется dotenv для загрузки ключа API из .env  
+Перед использованием необходимо заполнить файл шаблона .env.example, для этого нужно будет ключ APILAYER  
+(https://marketplace.apilayer.com/exchangerates_data-api)
+
+- Функция get_amount_of_transaction  
+Функция возвращает сумму транзакции в рублях.
+Если транзакция в долларах (USD) или евро (EUR) - автоматически конвертирует в рубли через API.
+
+```python
+transaction_usd = {
+    "operationAmount": {
+        "amount": "100",
+        "currency": {"code": "USD"}
+    }
+}
+
+transaction_rub = {
+    "operationAmount": {
+        "amount": "5000",
+        "currency": {"code": "RUB"}
+    }
+}
+
+amount_in_rub_usd = get_amount_of_transaction(transaction_usd)
+amount_in_rub_rub = get_amount_of_transaction(transaction_rub)
+
+print(f"Сумма в рублях (USD): {amount_in_rub_usd}")
+print(f"Сумма в рублях (RUB): {amount_in_rub_rub}")
+>>>
+Сумма в рублях (USD): 10250.0
+Сумма в рублях (RUB): 5000.0
+
+```
+
+8) readers
+- Функция excel_reader  
+Функция для преобразования информации из excel файла в список словарей. Получает путь до excel файла и преобразует его
+содержимое в список словарей  
+Пример исспользования:
+```python
+data = excel_reader("transactions.xlsx")
+print(data)
+
+>>> 
+[
+    {"id": 1, "state": "EXECUTED", "amount": 100, "currency": "USD", "date": "2024-01-15"},
+    {"id": 2, "state": "PENDING", "amount": 250, "currency": "EUR", "date": "2024-01-16"},
+    {"id": 3, "state": "EXECUTED", "amount": 75, "currency": "GBP", "date": "2024-01-17"}
+]
+```
+
+- Функция csv_reader  
+Функция для преобразования информации из csv файла в список словарей. Получает путь до csv файла и преобразует его
+содержимое в список словарей
+```python
+data = csv_reader("transactions.csv")
+print(data)
+
+>>>
+[
+    {"id": "1", "state": "EXECUTED", "amount": "100", "currency": "USD", "date": "2024-01-15"},
+    {"id": "2", "state": "PENDING", "amount": "250", "currency": "EUR", "date": "2024-01-16"},
+    {"id": "3", "state": "EXECUTED", "amount": "75", "currency": "GBP", "date": "2024-01-17"}
+]
+```
+
 ## Тестирование
 - На каждый модуль проекта были написаны тесты, после чего все тесты были успешно пройдены.  
 Все тесты находятся в директории tests, каждый модуль теста соответствует модулю директории src.
