@@ -35,3 +35,18 @@ def process_bank_search(data : list[dict], search : str) -> list[dict]:
     pattern = re.compile(rf"{search}")
 
     return [operation for operation in data if pattern.search(operation["description"], re.IGNORECASE)]
+
+def process_bank_operations(data : list[dict], categories : list) -> dict:
+    """
+    Функция для определения количества категорий в операциях.
+    :param data: Список словарей, в котором каждый словарь - это отдельная операция и данные о ней
+    :param categories: Список категорий для поиска и подсчета
+    :return: Словарь, в котором ключ - название категории, а значение - её количество.
+    """
+
+    result = {category : len(
+    [operation for operation in data if re.search(rf"{category}", operation["description"],
+    re.IGNORECASE)])
+    for category in categories}
+
+    return result
