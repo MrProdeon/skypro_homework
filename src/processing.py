@@ -1,4 +1,5 @@
 import re
+from collections import Counter
 
 def filter_by_state(list_of_dicts: list[dict], state: str = "EXECUTED") -> list[dict]:
     """
@@ -36,17 +37,18 @@ def process_bank_search(data : list[dict], search : str) -> list[dict]:
 
     return [operation for operation in data if pattern.search(operation["description"])]
 
-def process_bank_operations(data : list[dict], categories : list) -> dict:
+def process_bank_operations(data: list[dict], categories: list) -> dict:
     """
     Функция для определения количества категорий в операциях
     :param data: Список словарей, в котором каждый словарь - это отдельная операция и данные о ней
     :param categories: Список категорий для поиска и подсчета
     :return: Словарь, в котором ключ - название категории, а значение - её количество.
     """
+    found_categories = [
+        category
+        for operation in data
+        for category in categories
+        if re.search(rf"{category}", operation.get("description", ""), re.IGNORECASE)
+    ]
 
-    result = {category : len(
-    [operation for operation in data if re.search(rf"{category}", operation["description"],
-    re.IGNORECASE)])
-    for category in categories}
-
-    return result
+    return dict(Counter(found_categories))
