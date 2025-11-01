@@ -9,13 +9,13 @@ def filter_by_currency(transactions: list[dict], currency: str = "USD") -> Itera
     Если список на входе пуст или нет подходящей валюты - генератор будет пуст, ошибки при этом
     не возникает.
     """
-    filtered_transactions = (
-        one_transaction
-        for one_transaction in transactions
-        if one_transaction["operationAmount"]["currency"]["code"] == currency
-    )
-    for transaction in filtered_transactions:
-        yield transaction
+    for one_transaction in transactions:
+        try:
+            code = one_transaction["operationAmount"]["currency"]["code"]
+        except KeyError:
+            code = one_transaction["currency_code"]
+        if code == currency:
+            yield one_transaction
 
 
 def transaction_descriptions(transactions: list[dict]) -> Iterator[str]:
