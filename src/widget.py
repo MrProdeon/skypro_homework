@@ -7,7 +7,7 @@ def mask_account_card(card_or_account_number: str) -> str:
     По первому слову определит счет это или карта и замаскирует функциями из модуля masks.py
     Вернет замаскированную счет или карту.
     """
-    data_about_number = card_or_account_number.split()
+    data_about_number = str(card_or_account_number).split()
     if data_about_number[0] == "Счет" or len(data_about_number[-1]) > 16:
         resulted_mask = f"Счет {get_mask_account(int(data_about_number[-1]))}"
     else:
