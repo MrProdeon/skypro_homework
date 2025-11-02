@@ -8,9 +8,9 @@ from src.readers import csv_reader, excel_reader
 from src.utils import get_info_about_operation
 from src.widget import get_date, mask_account_card
 
-if __name__ == "__main__":
 
-    def main() -> None:
+
+def main() -> None:
         """
         Функция для сборки всего функционала в единое целое. Предоставляет пользовательский интерфейс в консоли
         для взаимодействия.
@@ -150,5 +150,5 @@ if __name__ == "__main__":
                 Сумма: {amount} {currency}
                 """
                     )
-
+if __name__ == "__main__":
     main()
