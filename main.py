@@ -7,7 +7,7 @@ from src.generators import filter_by_currency, transaction_descriptions
 from src.widget import get_date, mask_account_card
 import pandas as pd
 
-def main():
+def main() -> None:
     menu = """
 1. Получить информацию о транзакциях из JSON-файла
 2. Получить информацию о транзакциях из CSV-файла
@@ -86,51 +86,54 @@ def main():
     if is_sorted_by_word:
         transactions = process_bank_search(transactions, word_for_sorting)
 
-    print('Распечатываю итоговый список транзакций...')
-
     count_transactions = len(list(transactions))
-    print(f'Всего банковских операций в выборке : {count_transactions}')
+    if count_transactions == 0:
+        print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
+    else:
 
-    descriptions = transaction_descriptions(transactions)
+        print('Распечатываю итоговый список транзакций...')
+        print(f'Всего банковских операций в выборке : {count_transactions}')
 
-    for operation in transactions:
-        formated_date = get_date(operation.get("date", ""))
-        description = next(descriptions)
+        descriptions = transaction_descriptions(transactions)
 
-        # if operation.get("from") and pd.notna(operation.get("from")):
-        #     masked_from_requisites = mask_account_card(operation.get("from"))
-        # if operation.get("to"):
-        #     masked_to_requisites = mask_account_card(operation.get("to", ""))
+        for operation in transactions:
+            formated_date = get_date(operation.get("date", ""))
+            description = next(descriptions)
 
-        masked_from_requisites = ""
-        masked_to_requisites = ""
+            # if operation.get("from") and pd.notna(operation.get("from")):
+            #     masked_from_requisites = mask_account_card(operation.get("from"))
+            # if operation.get("to"):
+            #     masked_to_requisites = mask_account_card(operation.get("to", ""))
 
-        if pd.notna(operation.get("from")) and operation.get("from"):
-            masked_from_requisites = mask_account_card(operation["from"])
+            masked_from_requisites = ""
+            masked_to_requisites = ""
 
-        if pd.notna(operation.get("to")) and operation.get("to"):
-            masked_to_requisites = mask_account_card(operation["to"])
+            if pd.notna(operation.get("from")) and operation.get("from"):
+                masked_from_requisites = mask_account_card(operation["from"])
 
-        if user_answer == 1:
-            amount = operation.get("operationAmount", {}).get("amount")
-            currency = operation.get("operationAmount", {}).get("currency", {}).get("name")
+            if pd.notna(operation.get("to")) and operation.get("to"):
+                masked_to_requisites = mask_account_card(operation["to"])
 
-        else:
-            amount = operation.get("amount")
-            currency = operation.get("currency_name")
+            if user_answer == 1:
+                amount = operation.get("operationAmount", {}).get("amount")
+                currency = operation.get("operationAmount", {}).get("currency", {}).get("name")
 
-        if not masked_from_requisites:
-            print(f"""
-        {formated_date} {description}
-        {masked_to_requisites}
-        Сумма: {amount} {currency}
-        """)
-        else:
-            print(f"""
-        {formated_date} {description}
-        {masked_from_requisites} -> {masked_to_requisites}
-        Сумма: {amount} {currency}
-        """)
+            else:
+                amount = operation.get("amount")
+                currency = operation.get("currency_name")
+
+            if not masked_from_requisites:
+                print(f"""
+            {formated_date} {description}
+            {masked_to_requisites}
+            Сумма: {amount} {currency}
+            """)
+            else:
+                print(f"""
+            {formated_date} {description}
+            {masked_from_requisites} -> {masked_to_requisites}
+            Сумма: {amount} {currency}
+            """)
 
 
 
