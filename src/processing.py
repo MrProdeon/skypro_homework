@@ -1,6 +1,7 @@
 import re
 from collections import Counter
 
+
 def filter_by_state(list_of_dicts: list[dict], state: str = "EXECUTED") -> list[dict]:
     """
     Функция принимает список словарей, каждый словарь это информация о совершённой операции.
@@ -26,7 +27,7 @@ def sort_by_date(list_of_dicts: list[dict], is_reversed: bool = True) -> list[di
     return sorted_by_date_list
 
 
-def process_bank_search(data : list[dict], search : str) -> list[dict]:
+def process_bank_search(data: list[dict], search: str) -> list[dict]:
     """
     Функция для поиска операций с определенным описанием.
     :param data: Список словарей, в котором каждый словарь - это отдельная операция и данные о ней
@@ -36,6 +37,7 @@ def process_bank_search(data : list[dict], search : str) -> list[dict]:
     pattern = re.compile(rf"{search}", re.IGNORECASE)
 
     return [operation for operation in data if pattern.search(operation["description"])]
+
 
 def process_bank_operations(data: list[dict], categories: list) -> dict:
     """

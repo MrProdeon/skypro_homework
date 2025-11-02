@@ -1,15 +1,15 @@
 # mypy: ignore-errors
 
+import os
 from unittest.mock import patch
 
 import pandas as pd
 
 from src.readers import csv_reader, excel_reader
 
-import os
-
 path_csv = os.path.join(os.path.dirname(__file__), "..", "data", "transactions.csv")
 path_excel = os.path.join(os.path.dirname(__file__), "..", "data", "transactions_excel.xlsx")
+
 
 def test_csv_reader():
     mock_data = [{"id": 1, "state": "EXECUTED", "amount": 100}]

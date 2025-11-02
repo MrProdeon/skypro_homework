@@ -14,7 +14,11 @@ def csv_reader(path_to_csv_file: str) -> list[dict]:
     :return: Список словарей, в котором каждый словарь - это строка из csv файла, где ключ - название столбца, а
     значение - значение ячейки в строке по этому столбцу
     """
-    with open(path_to_csv_file, "r", encoding="UTF-8",) as file:
+    with open(
+        path_to_csv_file,
+        "r",
+        encoding="UTF-8",
+    ) as file:
         reader = csv.DictReader(file, delimiter=";")
         return [row for row in reader]
 

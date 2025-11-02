@@ -4,7 +4,8 @@ from unittest.mock import patch
 
 from src.utils import get_info_about_operation
 
-path = os.path.join(os.path.dirname(__file__), '..', 'data', 'operations.json')
+path = os.path.join(os.path.dirname(__file__), "..", "data", "operations.json")
+
 
 @patch("src.utils.json.load")
 def test_get_info_correct_file(mocked_load):
