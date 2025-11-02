@@ -38,7 +38,7 @@ def card_number_generator(start_gen: int, end_gen: int) -> Iterator[str]:
     for i in range(start_gen, end_gen + 1):
         resulted_card_number = []
         starting_number = i
-        zfilled_number = str(starting_number).zfill(20)
+        zfilled_number = str(starting_number).zfill(16)
         for j in range(0, len(zfilled_number), 4):
             chunk = zfilled_number[j : j + 4]
             resulted_card_number.append(chunk)
