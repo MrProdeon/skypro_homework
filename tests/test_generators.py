@@ -44,6 +44,9 @@ def test_filter_by_currency(transactions_for_test):
     testing_no_currency = filter_by_currency(transactions_for_test, "BTC")
     assert list(testing_no_currency) == []
 
+    testing_key_error = filter_by_currency([{"currency_code" : "USD"}], "USD")
+    assert list(testing_key_error) == [{"currency_code" : "USD"}]
+
 
 def test_descriptions(transactions_for_test):
     testins_desc = transaction_descriptions(transactions_for_test)
